@@ -6,7 +6,11 @@ import secrets
 from functools import wraps
 
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder=str(Path(__file__).parent.parent),
+    static_url_path=""
+)
 
 CORS(app)
 
@@ -715,7 +719,26 @@ def update_order_status(order_id):
         "message":
         "Order status updated successfully."
     })
+    
+# =====================================
+# WEBSITE HOME
+# =====================================
 
+@app.route("/")
+def home():
+
+    return app.send_static_file("index.html")
+
+@app.route("/admin.html")
+def admin_page():
+
+    return app.send_static_file("admin.html")
+
+
+@app.route("/admin-login.html")
+def admin_login_page():
+
+    return app.send_static_file("admin-login.html")
 
 # =====================================
 # START SERVER

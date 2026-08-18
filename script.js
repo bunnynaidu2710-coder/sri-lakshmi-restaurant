@@ -1,19 +1,32 @@
-const API_URL = "http://127.0.0.1:5000/api/reviews";
+// =====================================
+// API
+// =====================================
 
+const API_URL = "/api/reviews";
+
+
+// =====================================
+// LOAD REVIEWS
+// =====================================
 
 async function loadReviews() {
 
     const container =
         document.getElementById("reviews-container");
 
+    if (!container) {
+        return;
+    }
+
     try {
 
-        const response = await fetch(API_URL);
+        const response =
+            await fetch(API_URL);
 
-        const reviews = await response.json();
+        const reviews =
+            await response.json();
 
         container.innerHTML = "";
-
 
         if (reviews.length === 0) {
 
@@ -23,21 +36,20 @@ async function loadReviews() {
             return;
         }
 
-
         reviews.forEach(review => {
 
             const card =
                 document.createElement("div");
 
-            card.className = "review-card";
-
+            card.className =
+                "review-card";
 
             const stars =
                 "★".repeat(review.rating) +
                 "☆".repeat(5 - review.rating);
 
-
             card.innerHTML = `
+
                 <div class="stars">
                     ${stars}
                 </div>
@@ -53,8 +65,8 @@ async function loadReviews() {
                 <span>
                     Customer
                 </span>
-            `;
 
+            `;
 
             container.appendChild(card);
 
@@ -66,165 +78,283 @@ async function loadReviews() {
 
         container.innerHTML =
             "<p>Unable to load reviews.</p>";
+
     }
+
 }
 
 
-document
-    .getElementById("review-form")
-    .addEventListener("submit", async function(event) {
+// =====================================
+// REVIEW FORM
+// =====================================
 
-        event.preventDefault();
-
-
-        const name =
-            document.getElementById("review-name").value;
-
-        const rating =
-            document.getElementById("review-rating").value;
-
-        const review =
-            document.getElementById("review-text").value;
+const reviewForm =
+    document.getElementById("review-form");
 
 
-        const message =
-            document.getElementById("review-message");
+if (reviewForm) {
+
+    reviewForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            const name =
+                document
+                .getElementById("review-name")
+                .value
+                .trim();
+
+            const rating =
+                document
+                .getElementById("review-rating")
+                .value;
+
+            const review =
+                document
+                .getElementById("review-text")
+                .value
+                .trim();
+
+            const message =
+                document.getElementById(
+                    "review-message"
+                );
 
 
-        try {
+            try {
 
-            const response = await fetch(API_URL, {
+                const response =
+                    await fetch(
+                        API_URL,
+                        {
 
-                method: "POST",
+                            method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                            headers: {
 
-                body: JSON.stringify({
-                    name: name,
-                    rating: rating,
-                    review: review
-                })
+                                "Content-Type":
+                                    "application/json"
 
-            });
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    name: name,
+
+                                    rating: rating,
+
+                                    review: review
+
+                                })
+
+                        }
+                    );
 
 
-            const result =
-                await response.json();
+                const result =
+                    await response.json();
 
 
-            if (!response.ok) {
+                if (!response.ok) {
+
+                    message.textContent =
+                        result.error;
+
+                    return;
+                }
+
 
                 message.textContent =
-                    result.error;
+                    "Review submitted successfully!";
 
-                return;
+
+                document
+                    .getElementById(
+                        "review-form"
+                    )
+                    .reset();
+
+
+                loadReviews();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "Could not connect to the server.";
+
             }
 
-
-            message.textContent =
-                "Review submitted successfully!";
-
-
-            document
-                .getElementById("review-form")
-                .reset();
-
-
-            loadReviews();
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            message.textContent =
-                "Could not connect to the server.";
         }
+    );
 
-    });
+}
 
+
+// =====================================
+// LOAD REVIEWS
+// =====================================
 
 loadReviews();
-document
-    .getElementById("contact-form")
-    .addEventListener("submit", async function(event) {
 
-        event.preventDefault();
 
-        const name =
-            document.getElementById("contact-name").value;
+// =====================================
+// CONTACT / ENQUIRY FORM
+// =====================================
 
-        const phone =
-            document.getElementById("contact-phone").value;
+const contactForm =
+    document.getElementById(
+        "contact-form"
+    );
 
-        const email =
-            document.getElementById("contact-email").value;
 
-        const message =
-            document.getElementById("contact-message").value;
+if (contactForm) {
 
-        const status =
-            document.getElementById("contact-status");
+    contactForm.addEventListener(
+        "submit",
+        async function(event) {
 
-        try {
+            event.preventDefault();
 
-            const response = await fetch(
-                "http://127.0.0.1:5000/api/enquiries",
-                {
-                    method: "POST",
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+            const name =
+                document
+                .getElementById(
+                    "contact-name"
+                )
+                .value
+                .trim();
 
-                    body: JSON.stringify({
-                        name: name,
-                        phone: phone,
-                        email: email,
-                        message: message
-                    })
+
+            const phone =
+                document
+                .getElementById(
+                    "contact-phone"
+                )
+                .value
+                .trim();
+
+
+            const email =
+                document
+                .getElementById(
+                    "contact-email"
+                )
+                .value
+                .trim();
+
+
+            const message =
+                document
+                .getElementById(
+                    "contact-message"
+                )
+                .value
+                .trim();
+
+
+            const status =
+                document.getElementById(
+                    "contact-status"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/enquiries",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    name: name,
+
+                                    phone: phone,
+
+                                    email: email,
+
+                                    message: message
+
+                                })
+
+                        }
+                    );
+
+
+                const result =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    status.textContent =
+                        result.error;
+
+                    return;
                 }
-            );
 
-            const result = await response.json();
 
-            if (!response.ok) {
+                status.textContent =
+                    "Your enquiry has been sent successfully!";
 
-                status.textContent = result.error;
 
-                return;
+                contactForm.reset();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                status.textContent =
+                    "Could not connect to the server.";
+
             }
 
-            status.textContent =
-                "Your enquiry has been sent successfully!";
-
-            document
-                .getElementById("contact-form")
-                .reset();
-
-        } catch (error) {
-
-            console.error(error);
-
-            status.textContent =
-                "Could not connect to the server.";
         }
+    );
 
-    });
+}
 
-    // =========================
+
+// =====================================
 // SHOPPING CART
-// =========================
+// =====================================
 
 let cart = [];
 
 
-function addToCart(name, price, image) {
+// =====================================
+// ADD TO CART
+// =====================================
+
+function addToCart(
+    name,
+    price,
+    image
+) {
 
     const existingItem =
-        cart.find(item => item.name === name);
+        cart.find(
+            item =>
+                item.name === name
+        );
+
 
     if (existingItem) {
 
@@ -233,27 +363,56 @@ function addToCart(name, price, image) {
     } else {
 
         cart.push({
+
             name: name,
+
             price: price,
+
             image: image,
+
             quantity: 1
+
         });
 
     }
 
+
     updateCart();
 
 }
+
+
+// =====================================
+// UPDATE CART
+// =====================================
+
 function updateCart() {
 
     const cartItems =
-        document.getElementById("cart-items");
+        document.getElementById(
+            "cart-items"
+        );
 
     const cartCount =
-        document.getElementById("cart-count");
+        document.getElementById(
+            "cart-count"
+        );
 
     const cartTotal =
-        document.getElementById("cart-total");
+        document.getElementById(
+            "cart-total"
+        );
+
+
+    if (
+        !cartItems ||
+        !cartCount ||
+        !cartTotal
+    ) {
+
+        return;
+
+    }
 
 
     // Empty cart
@@ -263,11 +422,14 @@ function updateCart() {
         cartItems.innerHTML =
             "<p>Your cart is empty.</p>";
 
-        cartCount.textContent = "0";
+        cartCount.textContent =
+            "0";
 
-        cartTotal.textContent = "₹0";
+        cartTotal.textContent =
+            "₹0";
 
         return;
+
     }
 
 
@@ -279,90 +441,116 @@ function updateCart() {
     cartItems.innerHTML = "";
 
 
-    cart.forEach((item, index) => {
+    cart.forEach(
+        (item, index) => {
 
-        totalItems += item.quantity;
-
-
-        const itemTotal =
-            item.price * item.quantity;
+            totalItems +=
+                item.quantity;
 
 
-        totalPrice += itemTotal;
+            const itemTotal =
+                item.price *
+                item.quantity;
 
 
-        const cartItem =
-            document.createElement("div");
+            totalPrice +=
+                itemTotal;
 
 
-        cartItem.className =
-            "cart-item";
+            const cartItem =
+                document.createElement(
+                    "div"
+                );
 
 
-        cartItem.innerHTML = `
+            cartItem.className =
+                "cart-item";
 
-            <img
-                src="${item.image}"
-                alt="${item.name}"
-            >
 
-            <div class="cart-item-info">
+            cartItem.innerHTML = `
 
-                <h3>
-                    ${item.name}
-                </h3>
+                <img
+                    src="${item.image}"
+                    alt="${item.name}"
+                >
 
-                <p>
-                    ₹${item.price}
-                </p>
 
-                <div class="quantity-controls">
+                <div
+                    class="cart-item-info">
+
+                    <h3>
+                        ${item.name}
+                    </h3>
+
+                    <p>
+                        ₹${item.price}
+                    </p>
+
+
+                    <div
+                        class="quantity-controls">
+
+                        <button
+                            onclick="
+                            decreaseQuantity(
+                                ${index}
+                            )">
+
+                            −
+
+                        </button>
+
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+
+                        <button
+                            onclick="
+                            increaseQuantity(
+                                ${index}
+                            )">
+
+                            +
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="cart-item-total">
+
+                    <strong>
+                        ₹${itemTotal}
+                    </strong>
+
 
                     <button
-                        onclick="decreaseQuantity(${index})">
+                        class="remove-item"
+                        onclick="
+                        removeFromCart(
+                            ${index}
+                        )">
 
-                        −
-
-                    </button>
-
-                    <span>
-                        ${item.quantity}
-                    </span>
-
-                    <button
-                        onclick="increaseQuantity(${index})">
-
-                        +
+                        Remove
 
                     </button>
 
                 </div>
 
-            </div>
+            `;
 
 
-            <div class="cart-item-total">
+            cartItems.appendChild(
+                cartItem
+            );
 
-                <strong>
-                    ₹${itemTotal}
-                </strong>
-
-                <button
-                    class="remove-item"
-                    onclick="removeFromCart(${index})">
-
-                    Remove
-
-                </button>
-
-            </div>
-
-        `;
-
-
-        cartItems.appendChild(cartItem);
-
-    });
+        }
+    );
 
 
     cartCount.textContent =
@@ -374,17 +562,42 @@ function updateCart() {
 
 }
 
+
+// =====================================
+// INCREASE QUANTITY
+// =====================================
+
 function increaseQuantity(index) {
+
+    if (!cart[index]) {
+        return;
+    }
+
 
     cart[index].quantity++;
 
+
     updateCart();
+
+    updateCheckout();
 
 }
 
+
+// =====================================
+// DECREASE QUANTITY
+// =====================================
+
 function decreaseQuantity(index) {
 
-    if (cart[index].quantity > 1) {
+    if (!cart[index]) {
+        return;
+    }
+
+
+    if (
+        cart[index].quantity > 1
+    ) {
 
         cart[index].quantity--;
 
@@ -394,23 +607,41 @@ function decreaseQuantity(index) {
 
     }
 
+
     updateCart();
 
+    updateCheckout();
+
 }
+
+
+// =====================================
+// REMOVE FROM CART
+// =====================================
 
 function removeFromCart(index) {
 
     cart.splice(index, 1);
 
+
     updateCart();
 
+    updateCheckout();
+
 }
+
+
+// =====================================
+// CHECKOUT
+// =====================================
 
 function checkout() {
 
     if (cart.length === 0) {
 
-        alert("Your cart is empty.");
+        alert(
+            "Your cart is empty."
+        );
 
         return;
 
@@ -426,11 +657,22 @@ function checkout() {
         );
 
 
-    checkoutSection.scrollIntoView({
-        behavior: "smooth"
-    });
+    if (checkoutSection) {
+
+        checkoutSection.scrollIntoView({
+
+            behavior: "smooth"
+
+        });
+
+    }
 
 }
+
+
+// =====================================
+// UPDATE CHECKOUT
+// =====================================
 
 function updateCheckout() {
 
@@ -448,6 +690,17 @@ function updateCheckout() {
         document.getElementById(
             "checkout-total"
         );
+
+
+    if (
+        !checkoutItems ||
+        !subtotalElement ||
+        !totalElement
+    ) {
+
+        return;
+
+    }
 
 
     if (cart.length === 0) {
@@ -475,14 +728,18 @@ function updateCheckout() {
     cart.forEach(item => {
 
         const itemTotal =
-            item.price * item.quantity;
+            item.price *
+            item.quantity;
 
 
-        subtotal += itemTotal;
+        subtotal +=
+            itemTotal;
 
 
         const itemElement =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         itemElement.className =
@@ -493,19 +750,29 @@ function updateCheckout() {
 
             <div>
 
-                <div class="checkout-item-name">
+                <div
+                    class="checkout-item-name">
+
                     ${item.name}
+
                 </div>
 
-                <div class="checkout-item-quantity">
+
+                <div
+                    class="checkout-item-quantity">
+
                     ₹${item.price} ×
                     ${item.quantity}
+
                 </div>
 
             </div>
 
+
             <strong>
+
                 ₹${itemTotal}
+
             </strong>
 
         `;
@@ -534,9 +801,20 @@ function updateCheckout() {
 
 }
 
-document
-    .getElementById("checkout-form")
-    .addEventListener(
+
+// =====================================
+// PLACE ORDER
+// =====================================
+
+const checkoutForm =
+    document.getElementById(
+        "checkout-form"
+    );
+
+
+if (checkoutForm) {
+
+    checkoutForm.addEventListener(
         "submit",
         async function(event) {
 
@@ -550,6 +828,7 @@ document
                 );
 
                 return;
+
             }
 
 
@@ -558,7 +837,8 @@ document
                 .getElementById(
                     "customer-name"
                 )
-                .value.trim();
+                .value
+                .trim();
 
 
             const phone =
@@ -566,7 +846,8 @@ document
                 .getElementById(
                     "customer-phone"
                 )
-                .value.trim();
+                .value
+                .trim();
 
 
             const address =
@@ -574,7 +855,8 @@ document
                 .getElementById(
                     "customer-address"
                 )
-                .value.trim();
+                .value
+                .trim();
 
 
             const payment =
@@ -597,6 +879,7 @@ document
                 );
 
                 return;
+
             }
 
 
@@ -614,8 +897,10 @@ document
 
             const deliveryFee = 40;
 
+
             const total =
-                subtotal + deliveryFee;
+                subtotal +
+                deliveryFee;
 
 
             const orderData = {
@@ -640,7 +925,7 @@ document
 
                 const response =
                     await fetch(
-                        "http://127.0.0.1:5000/api/orders",
+                        "/api/orders",
                         {
 
                             method: "POST",
@@ -673,12 +958,22 @@ document
                     );
 
                     return;
+
                 }
 
 
                 alert(
                     "Order placed successfully! " +
                     "Order ID: #" +
+                    result.order_id
+                );
+
+
+                // Save order ID
+                // for tracking
+
+                localStorage.setItem(
+                    "last_order_id",
                     result.order_id
                 );
 
@@ -690,15 +985,29 @@ document
 
                 updateCart();
 
-
                 updateCheckout();
 
 
-                document
-                    .getElementById(
-                        "checkout-form"
-                    )
-                    .reset();
+                checkoutForm.reset();
+
+
+                // Scroll to tracking
+
+                const trackingSection =
+                    document.getElementById(
+                        "order-tracking"
+                    );
+
+
+                if (trackingSection) {
+
+                    trackingSection.scrollIntoView({
+
+                        behavior: "smooth"
+
+                    });
+
+                }
 
 
             } catch (error) {
@@ -715,6 +1024,8 @@ document
         }
     );
 
+}
+
 
 // =====================================
 // CUSTOMER ORDER TRACKING
@@ -722,12 +1033,10 @@ document
 
 async function trackOrder() {
 
-    const orderId =
-        document
-        .getElementById(
+    const orderInput =
+        document.getElementById(
             "tracking-order-id"
-        )
-        .value.trim();
+        );
 
 
     const result =
@@ -736,12 +1045,27 @@ async function trackOrder() {
         );
 
 
+    if (
+        !orderInput ||
+        !result
+    ) {
+
+        return;
+
+    }
+
+
+    const orderId =
+        orderInput.value.trim();
+
+
     if (!orderId) {
 
         result.innerHTML =
             "<p>Please enter an Order ID.</p>";
 
         return;
+
     }
 
 
@@ -753,8 +1077,8 @@ async function trackOrder() {
 
         const response =
             await fetch(
-                "http://127.0.0.1:5000/api/orders/"
-                + orderId
+                "/api/orders/" +
+                orderId
             );
 
 
@@ -766,7 +1090,8 @@ async function trackOrder() {
 
             result.innerHTML = `
 
-                <div class="tracking-error">
+                <div
+                    class="tracking-error">
 
                     ❌ ${order.error}
 
@@ -775,15 +1100,22 @@ async function trackOrder() {
             `;
 
             return;
+
         }
 
 
         const statuses = [
+
             "NEW",
+
             "ACCEPTED",
+
             "PREPARING",
+
             "READY",
+
             "DELIVERED"
+
         ];
 
 
@@ -802,36 +1134,48 @@ async function trackOrder() {
                 let className = "";
 
 
-                if (index < currentIndex) {
+                if (
+                    index <
+                    currentIndex
+                ) {
 
-                    className = "completed";
+                    className =
+                        "completed";
 
                 }
 
                 else if (
-                    index === currentIndex
+                    index ===
+                    currentIndex
                 ) {
 
-                    className = "current";
+                    className =
+                        "current";
 
                 }
+
+
+                const checkMark =
+                    (
+                        index <=
+                        currentIndex
+                    )
+                    ? "✓"
+                    : "";
 
 
                 statusHTML += `
 
                     <div
-                        class="tracking-step
+                        class="
+                        tracking-step
                         ${className}">
 
                         <div
-                            class="tracking-circle">
+                            class="
+                            tracking-circle">
 
-                            ${
-                                index < currentIndex ||
-                                index === currentIndex
-                                ? "✓"
-                                : ""
-                            }
+                            ${checkMark}
 
                         </div>
 
@@ -852,18 +1196,24 @@ async function trackOrder() {
 
         result.innerHTML = `
 
-            <div class="tracking-card">
+            <div
+                class="tracking-card">
 
                 <h3>
+
                     Order #${order.id}
+
                 </h3>
 
 
                 <p>
 
                     Customer:
+
                     <strong>
+
                         ${order.name}
+
                     </strong>
 
                 </p>
@@ -872,8 +1222,11 @@ async function trackOrder() {
                 <p>
 
                     Total:
+
                     <strong>
+
                         ₹${order.total}
+
                     </strong>
 
                 </p>
@@ -884,13 +1237,16 @@ async function trackOrder() {
                     Current Status:
 
                     <strong>
+
                         ${order.status}
+
                     </strong>
 
                 </p>
 
 
-                <div class="tracking-progress">
+                <div
+                    class="tracking-progress">
 
                     ${statusHTML}
 
@@ -901,16 +1257,15 @@ async function trackOrder() {
         `;
 
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(error);
 
 
         result.innerHTML = `
 
-            <div class="tracking-error">
+            <div
+                class="tracking-error">
 
                 ❌ Unable to connect
                 to the server.
@@ -922,3 +1277,37 @@ async function trackOrder() {
     }
 
 }
+
+
+// =====================================
+// AUTO LOAD LAST ORDER
+// =====================================
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        const lastOrderId =
+            localStorage.getItem(
+                "last_order_id"
+            );
+
+
+        const trackingInput =
+            document.getElementById(
+                "tracking-order-id"
+            );
+
+
+        if (
+            lastOrderId &&
+            trackingInput
+        ) {
+
+            trackingInput.value =
+                lastOrderId;
+
+        }
+
+    }
+);
