@@ -18,10 +18,13 @@
 
         body {
             margin: 0;
+
             min-height: 100vh;
 
             display: flex;
+
             justify-content: center;
+
             align-items: center;
 
             font-family: Arial, sans-serif;
@@ -29,8 +32,11 @@
             background: #f5f5f5;
         }
 
+
         .login-box {
+
             width: 400px;
+
             max-width: 90%;
 
             padding: 40px;
@@ -40,20 +46,29 @@
             border-radius: 15px;
 
             box-shadow:
-                0 5px 20px rgba(0, 0, 0, 0.15);
+                0 5px 20px
+                rgba(0, 0, 0, 0.15);
 
             text-align: center;
         }
 
+
         .login-box h1 {
+
             margin-bottom: 10px;
+
+            color: #111;
         }
 
+
         .login-box p {
+
             color: #666;
         }
 
+
         .login-box input {
+
             width: 100%;
 
             padding: 14px;
@@ -65,9 +80,20 @@
             border-radius: 7px;
 
             font-size: 16px;
+
+            outline: none;
         }
 
+
+        .login-box input:focus {
+
+            border-color: #ff9800;
+
+        }
+
+
         .login-box button {
+
             width: 100%;
 
             padding: 14px;
@@ -87,14 +113,44 @@
             cursor: pointer;
         }
 
+
         .login-box button:hover {
+
             opacity: 0.9;
+
         }
 
+
+        .login-box button:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
         #login-message {
+
             margin-top: 20px;
 
             font-weight: bold;
+
+            min-height: 20px;
+        }
+
+
+        .success {
+
+            color: green;
+
+        }
+
+
+        .error {
+
+            color: red;
+
         }
 
     </style>
@@ -104,135 +160,261 @@
 
 <body>
 
+
 <div class="login-box">
+
 
     <h1>Sri Lakshmi</h1>
 
-    <p>Restaurant Admin Login</p>
+
+    <p>
+        Restaurant Admin Login
+    </p>
 
 
     <form id="login-form">
+
 
         <input
             type="text"
             id="username"
             placeholder="Username"
+            autocomplete="username"
             required
         >
+
 
         <input
             type="password"
             id="password"
             placeholder="Password"
+            autocomplete="current-password"
             required
         >
 
-        <button type="submit">
+
+        <button
+            type="submit"
+            id="login-button"
+        >
             Login
         </button>
+
 
     </form>
 
 
     <p id="login-message"></p>
 
+
 </div>
 
 
 <script>
 
-const API =
-    "http://127.0.0.1:5000";
+
+// =====================================
+// API
+// =====================================
+
+// IMPORTANT:
+// Empty string means use the same
+// server that is serving this page.
+//
+// Local:
+// http://127.0.0.1:5000/api/login
+//
+// Live:
+// https://sri-lakshmi-restaurant.onrender.com/api/login
+
+const API = "";
 
 
-document
-    .getElementById("login-form")
-    .addEventListener(
-        "submit",
-        async function(event) {
+// =====================================
+// LOGIN FORM
+// =====================================
 
-            event.preventDefault();
-
-
-            const username =
-                document
-                .getElementById("username")
-                .value;
+const loginForm =
+    document.getElementById(
+        "login-form"
+    );
 
 
-            const password =
-                document
-                .getElementById("password")
-                .value;
+const loginButton =
+    document.getElementById(
+        "login-button"
+    );
 
 
-            const message =
-                document
-                .getElementById("login-message");
+const message =
+    document.getElementById(
+        "login-message"
+    );
 
 
-            try {
+// =====================================
+// LOGIN
+// =====================================
 
-                const response =
-                    await fetch(
-                        API + "/api/login",
-                        {
-                            method: "POST",
+loginForm.addEventListener(
+    "submit",
+    async function(event) {
 
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify({
-                                    username:
-                                        username,
-
-                                    password:
-                                        password
-                                })
-                        }
-                    );
+        event.preventDefault();
 
 
-                const result =
-                    await response.json();
+        const username =
+            document
+            .getElementById(
+                "username"
+            )
+            .value
+            .trim();
 
 
-                if (!response.ok) {
+        const password =
+            document
+            .getElementById(
+                "password"
+            )
+            .value;
 
-                    message.textContent =
-                        result.error;
 
-                    return;
-                }
+        // Clear previous message
+
+        message.textContent = "";
+
+        message.className = "";
 
 
-                localStorage.setItem(
-                    "admin_token",
-                    result.token
+        // Disable button
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+            "Logging in...";
+
+
+        try {
+
+
+            const response =
+                await fetch(
+                    API + "/api/login",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                username:
+                                    username,
+
+                                password:
+                                    password
+
+                            })
+
+                    }
                 );
 
 
-                window.location.href =
-                    "admin.html";
+            const result =
+                await response.json();
 
-            }
 
-            catch (error) {
+            // =================================
+            // LOGIN FAILED
+            // =================================
 
-                console.error(error);
+            if (!response.ok) {
 
                 message.textContent =
-                    "Could not connect to server.";
+                    result.error ||
+                    "Invalid username or password.";
+
+                message.className =
+                    "error";
+
+                return;
 
             }
 
+
+            // =================================
+            // LOGIN SUCCESS
+            // =================================
+
+            localStorage.setItem(
+                "admin_token",
+                result.token
+            );
+
+
+            message.textContent =
+                "Login successful!";
+
+            message.className =
+                "success";
+
+
+            // Redirect to admin dashboard
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "/admin.html";
+
+                },
+                500
+            );
+
+
         }
-    );
+
+
+        catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+
+            message.textContent =
+                "Could not connect to server.";
+
+            message.className =
+                "error";
+
+        }
+
+
+        finally {
+
+            loginButton.disabled =
+                false;
+
+            loginButton.textContent =
+                "Login";
+
+        }
+
+    }
+);
+
 
 </script>
+
 
 </body>
 
