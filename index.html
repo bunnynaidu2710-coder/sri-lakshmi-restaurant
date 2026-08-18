@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sri Lakshmi Family Restaurant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <h2>Sri Lakshmi</h2>
+
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#menu">Menu</a>
+                <a href="#about">About</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#contact">Contact</a>
+                <a href="#cart">
+    🛒 Cart
+    (<span id="cart-count">0</span>)
+</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home -->
+    <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <p class="small-title">WELCOME TO</p>
+
+            <h1>Sri Lakshmi<br>Family Restaurant</h1>
+
+            <p>
+                Delicious food • Family atmosphere • Great taste
+            </p>
+
+            <div class="buttons">
+                <a href="#menu" class="btn">View Menu</a>
+
+                <a href="https://wa.me/919999999999"
+                   class="btn whatsapp">
+                    WhatsApp
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Menu -->
+    <section id="menu">
+
+    <h2>Our Biryani Menu</h2>
+
+    <p class="section-text">
+        Freshly prepared biryanis with authentic taste and aroma.
+    </p>
+
+    <div class="menu-container">
+
+
+        <!-- Chicken Biryani -->
+
+        <div class="food-card">
+
+    <img src="images/chicken-biryani.jpg"
+         alt="Chicken Biryani">
+
+    <h3>Chicken Biryani</h3>
+
+    <p>
+        Aromatic basmati rice with tender chicken
+        and traditional spices.
+    </p>
+
+    <strong>₹220</strong>
+
+    <button
+        class="add-cart"
+        onclick="addToCart(
+            'Chicken Biryani',
+            220,
+            'images/chicken-biryani.jpg'
+        )">
+
+        Add to Cart 🛒
+
+    </button>
+
+</div>
+
+
+        <!-- Mutton Biryani -->
+
+        <div class="food-card">
+
+    <img src="images/mutton-biryani.jpg"
+         alt="Mutton Biryani">
+
+    <h3>Mutton Biryani</h3>
+
+    <p>
+        Rich and flavorful mutton biryani
+        prepared with traditional spices.
+    </p>
+
+    <strong>₹280</strong>
+
+    <button
+        class="add-cart"
+        onclick="addToCart(
+            'Mutton Biryani',
+            280,
+            'images/mutton-biryani.jpg'
+        )">
+
+        Add to Cart 🛒
+
+    </button>
+
+</div>
+
+
+        <!-- Veg Biryani -->
+
+        <div class="food-card">
+
+            <img src="images/veg-biryani.jpg"
+                 alt="Veg Biryani">
+
+            <h3>Veg Biryani</h3>
+
+            <p>
+                Fragrant basmati rice cooked with
+                fresh vegetables and spices.
+            </p>
+
+            <strong>₹160</strong>
+
+            <button
+    class="add-cart"
+    onclick="addToCart(
+        'Veg Biryani',
+        160,
+        'images/veg-biryani.jpg'
+    )">
+
+    Add to Cart 🛒
+
+</button>
+
+        </div>
+
+
+        <!-- Paneer Biryani -->
+
+        <div class="food-card">
+
+            <img src="images/paneer-biryani.jpg"
+                 alt="Paneer Biryani">
+
+            <h3>Paneer Biryani</h3>
+
+            <p>
+                Flavorful biryani with soft paneer
+                and aromatic spices.
+            </p>
+
+            <strong>₹190</strong>
+
+            <button
+    class="add-cart"
+    onclick="addToCart(
+        'Paneer Biryani',
+        190,
+        'images/paneer-biryani.jpg'
+    )">
+
+    Add to Cart 🛒
+
+</button>
+
+        </div>
+
+
+        <!-- Egg Biryani -->
+
+        <div class="food-card">
+
+            <img src="images/egg-biryani.jpg"
+                 alt="Egg Biryani">
+
+            <h3>Egg Biryani</h3>
+
+            <p>
+                Delicious biryani served with
+                perfectly cooked eggs.
+            </p>
+
+            <strong>₹170</strong>
+
+            <button
+    class="add-cart"
+    onclick="addToCart(
+        'Egg Biryani',
+        170,
+        'images/egg-biryani.jpg'
+    )">
+
+    Add to Cart 🛒
+
+</button>
+
+        </div>
+
+
+        <!-- Special Biryani -->
+
+        <div class="food-card">
+
+            <img src="images/special-biryani.jpg"
+                 alt="Special Biryani">
+
+            <h3>Special Biryani</h3>
+
+            <p>
+                Our signature special biryani
+                prepared with premium ingredients.
+            </p>
+
+            <strong>₹320</strong>
+
+            <button
+    class="add-cart"
+    onclick="addToCart(
+        'Special Biryani',
+        320,
+        'images/special-biryani.jpg'
+    )">
+
+    Add to Cart 🛒
+
+</button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+    <!-- About -->
+    <section id="about" class="about">
+
+        <div>
+
+            <h2>About Us</h2>
+
+            <p>
+                Sri Lakshmi Family Restaurant is a welcoming place
+                for families and friends to enjoy delicious food.
+            </p>
+
+            <p>
+                We focus on fresh ingredients, great taste and
+                friendly service.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- Customer Reviews -->
+
+<section id="reviews">
+
+    <h2>What Our Customers Say</h2>
+
+    <p class="section-text">
+        Our customers love our food and service.
+    </p>
+
+    <div id="reviews-container" class="reviews-container">
+
+        <p>Loading reviews...</p>
+
+    </div>
+
+
+    <div class="review-form">
+
+        <h2>Leave a Review</h2>
+
+        <form id="review-form">
+
+            <input
+                type="text"
+                id="review-name"
+                placeholder="Your Name"
+                required
+            >
+
+            <select id="review-rating" required>
+
+                <option value="">Select Rating</option>
+                <option value="5">★★★★★ - 5 Stars</option>
+                <option value="4">★★★★☆ - 4 Stars</option>
+                <option value="3">★★★☆☆ - 3 Stars</option>
+                <option value="2">★★☆☆☆ - 2 Stars</option>
+                <option value="1">★☆☆☆☆ - 1 Star</option>
+
+            </select>
+
+
+            <textarea
+                id="review-text"
+                placeholder="Write your review..."
+                rows="5"
+                required
+            ></textarea>
+
+
+            <button
+                type="submit"
+                class="btn"
+            >
+                Submit Review
+            </button>
+
+        </form>
+
+        <p id="review-message"></p>
+
+    </div>
+
+</section>
+
+<!-- Shopping Cart -->
+
+<section id="cart">
+
+    <h2>Your Shopping Cart 🛒</h2>
+
+    <p class="section-text">
+        Review your selected items before checkout.
+    </p>
+
+    <div id="cart-items">
+
+        <p>Your cart is empty.</p>
+
+    </div>
+
+    <div class="cart-summary">
+
+        <h3>
+            Total:
+            <span id="cart-total">₹0</span>
+        </h3>
+
+        <button
+            id="checkout-button"
+            class="btn"
+            onclick="checkout()">
+
+            Proceed to Checkout
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     CHECKOUT
+========================= -->
+
+<section id="checkout" class="checkout-section">
+
+    <h2>Checkout 🧾</h2>
+
+    <p class="section-text">
+        Enter your details to place your order.
+    </p>
+
+
+    <div class="checkout-container">
+
+
+        <!-- Customer Details -->
+
+        <div class="checkout-form">
+
+            <h3>Customer Details</h3>
+
+
+            <form id="checkout-form">
+
+
+                <label for="customer-name">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="customer-name"
+                    placeholder="Enter your name"
+                    required
+                >
+
+
+                <label for="customer-phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="customer-phone"
+                    placeholder="Enter your phone number"
+                    required
+                >
+
+
+                <label for="customer-address">
+                    Delivery Address
+                </label>
+
+                <textarea
+                    id="customer-address"
+                    placeholder="Enter your complete delivery address"
+                    rows="5"
+                    required
+                ></textarea>
+
+
+                <label for="payment-method">
+                    Payment Method
+                </label>
+
+                <select
+                    id="payment-method"
+                    required
+                >
+
+                    <option value="">
+                        Select Payment Method
+                    </option>
+
+                    <option value="COD">
+                        Cash on Delivery
+                    </option>
+
+                    <option value="ONLINE">
+                        Online Payment
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="submit"
+                    class="place-order-btn"
+                >
+                    Place Order
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+        <!-- Order Summary -->
+
+        <div class="order-summary">
+
+            <h3>Your Order</h3>
+
+            <div id="checkout-items">
+
+                <p>
+                    Your cart is empty.
+                </p>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="summary-row">
+
+                <span>Subtotal</span>
+
+                <strong id="checkout-subtotal">
+                    ₹0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>Delivery Fee</span>
+
+                <strong id="delivery-fee">
+                    ₹40
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row total-row">
+
+                <span>Total</span>
+
+                <strong id="checkout-total">
+                    ₹0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+<!-- =========================
+     ORDER TRACKING
+========================= -->
+
+<section id="order-tracking" class="tracking-section">
+
+    <h2>📦 Track Your Order</h2>
+
+    <p>
+        Enter your order ID to check your order status.
+    </p>
+
+    <div class="tracking-form">
+
+        <input
+            type="number"
+            id="tracking-order-id"
+            placeholder="Enter Order ID"
+        >
+
+        <button
+            onclick="trackOrder()">
+
+            Track Order
+
+        </button>
+
+    </div>
+
+    <div id="tracking-result">
+
+        <p>
+            Enter your Order ID above.
+        </p>
+
+    </div>
+
+</section>
+
+
+    <section id="contact">
+
+    <h2>Contact Us</h2>
+
+    <p class="section-text">
+        Have a question or want to know more?
+        Send us a message.
+    </p>
+
+    <div class="contact-form">
+
+        <form id="contact-form">
+
+            <input
+                type="text"
+                id="contact-name"
+                placeholder="Your Name"
+                required
+            >
+
+            <input
+                type="tel"
+                id="contact-phone"
+                placeholder="Phone Number"
+                required
+            >
+
+            <input
+                type="email"
+                id="contact-email"
+                placeholder="Email Address"
+            >
+
+            <textarea
+                id="contact-message"
+                placeholder="Your Message"
+                rows="6"
+                required
+            ></textarea>
+
+            <button
+                type="submit"
+                class="btn">
+                Send Message
+            </button>
+
+        </form>
+
+        <p id="contact-status"></p>
+
+    </div>
+
+</section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <p>
+            © 2026 Sri Lakshmi Family Restaurant
+        </p>
+
+        <p>
+            Website designed by Bunny Tech Services
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
