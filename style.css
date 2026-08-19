@@ -1004,3 +1004,6 @@ footer p {
     }
 
 }
+body {
+    cursor: url("images/legpiece.png") 16 16, auto;
+}
