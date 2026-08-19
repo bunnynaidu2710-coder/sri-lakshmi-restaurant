@@ -2,7 +2,7 @@
 // API
 // =====================================
 
-const API_URL = "/api/reviews";
+const API_URL = "https://sri-lakshmi-restaurant-backend.onrender.com/api/reviews";
 
 
 // =====================================
