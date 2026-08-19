@@ -392,55 +392,59 @@ if (!TOKEN) {
 async function loadReviews() {
 
     const container =
-        document.getElementById(
-            "admin-reviews"
-        );
-
+        document.getElementById("admin-reviews");
 
     try {
 
-        const response =
-            await fetch(
-                API + "/api/reviews",
-                {
-                    headers: {
-                        "Authorization":
-                            "Bearer " + TOKEN
-                    }
+        const response = await fetch(
+            API + "/api/reviews",
+            {
+                method: "GET",
+
+                headers: {
+                    "Authorization":
+                        "Bearer " + TOKEN
                 }
-            );
+            }
+        );
 
+        console.log(
+            "Reviews status:",
+            response.status
+        );
 
-        if (response.status === 401) {
+        const text =
+            await response.text();
 
-            logout();
-
-            return;
-
-        }
-
+        console.log(
+            "Reviews response:",
+            text
+        );
 
         if (!response.ok) {
 
             throw new Error(
-                "Unable to load reviews"
+                "Server returned " +
+                response.status +
+                ": " +
+                text
             );
-
         }
 
-
         const reviews =
-            await response.json();
+            JSON.parse(text);
 
+        console.log(
+            "Reviews data:",
+            reviews
+        );
 
         document.getElementById(
             "review-count"
         ).textContent =
             reviews.length;
 
-
         container.innerHTML = "";
-
 
         if (reviews.length === 0) {
 
@@ -448,97 +452,70 @@ async function loadReviews() {
                 "<p>No reviews yet.</p>";
 
             return;
-
         }
 
+        reviews.forEach(function(review) {
 
-        reviews.forEach(
-            review => {
+            const card =
+                document.createElement("div");
 
-                const card =
-                    document.createElement(
-                        "div"
-                    );
+            card.className =
+                "review-card";
 
+            const rating =
+                Number(review.rating);
 
-                card.className =
-                    "review-card";
+            const stars =
+                "★".repeat(rating) +
+                "☆".repeat(5 - rating);
 
+            card.innerHTML = `
 
-                const rating =
-                    Number(
-                        review.rating
-                    ) || 0;
+                <div class="customer-name">
+                    ${review.name}
+                </div>
 
+                <div class="stars">
+                    ${stars}
+                </div>
 
-                const stars =
-                    "★".repeat(
-                        rating
-                    ) +
-                    "☆".repeat(
-                        5 - rating
-                    );
+                <div class="message">
+                    "${review.review}"
+                </div>
 
+                <div class="date">
+                    ${review.created_at}
+                </div>
 
-                card.innerHTML = `
+            `;
 
-                    <div class="customer-name">
-                        ${escapeHTML(
-                            review.name
-                        )}
-                    </div>
+            container.appendChild(card);
 
-                    <div class="stars">
-                        ${stars}
-                    </div>
+        });
 
-                    <div class="message">
-                        "${escapeHTML(
-                            review.review
-                        )}"
-                    </div>
-
-                    <div class="date">
-                        ${escapeHTML(
-                            review.created_at
-                        )}
-                    </div>
-
-                `;
-
-
-                container.appendChild(
-                    card
-                );
-
-            }
-        );
-
-    }
-
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
-            "Reviews error:",
+            "REVIEWS ERROR:",
             error
         );
-
 
         container.innerHTML = `
 
             <div class="error-box">
 
-                <p>
-                    ❌ Unable to load reviews.
-                </p>
+                ❌ Unable to load reviews.
+
+                <br><br>
+
+                Error:
+                ${error.message}
 
             </div>
 
         `;
 
     }
-
 }
 
 
