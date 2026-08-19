@@ -4,7 +4,12 @@ import sqlite3
 from pathlib import Path
 import secrets
 from functools import wraps
+import json
 
+
+# =====================================
+# FLASK APP
+# =====================================
 
 app = Flask(
     __name__,
@@ -14,6 +19,10 @@ app = Flask(
 
 CORS(app)
 
+
+# =====================================
+# DATABASE LOCATION
+# =====================================
 
 DATABASE = Path(__file__).parent / "restaurant.db"
 
@@ -48,7 +57,9 @@ def create_database():
     connection = get_db()
 
 
-    # Reviews table
+    # =================================
+    # REVIEWS TABLE
+    # =================================
 
     connection.execute("""
         CREATE TABLE IF NOT EXISTS reviews (
@@ -68,7 +79,9 @@ def create_database():
     """)
 
 
-    # Enquiries table
+    # =================================
+    # ENQUIRIES TABLE
+    # =================================
 
     connection.execute("""
         CREATE TABLE IF NOT EXISTS enquiries (
@@ -88,8 +101,11 @@ def create_database():
 
         )
     """)
-    
-        # Orders table
+
+
+    # =================================
+    # ORDERS TABLE
+    # =================================
 
     connection.execute("""
         CREATE TABLE IF NOT EXISTS orders (
@@ -123,6 +139,18 @@ def create_database():
 
 
 # =====================================
+# IMPORTANT
+# CREATE DATABASE WHEN SERVER STARTS
+# =====================================
+
+# This is outside the __main__ block.
+# Therefore it also runs when Render
+# starts Flask using Gunicorn.
+
+create_database()
+
+
+# =====================================
 # ADMIN AUTHENTICATION
 # =====================================
 
@@ -132,30 +160,40 @@ def admin_required(function):
     def wrapper(*args, **kwargs):
 
         auth_header = request.headers.get(
-            "Authorization", ""
+            "Authorization",
+            ""
         )
 
 
-        if not auth_header.startswith("Bearer "):
+        if not auth_header.startswith(
+            "Bearer "
+        ):
 
             return jsonify({
-                "error": "Admin login required."
+                "error":
+                "Admin login required."
             }), 401
 
 
         token = auth_header.replace(
-            "Bearer ", "", 1
+            "Bearer ",
+            "",
+            1
         )
 
 
         if token not in admin_tokens:
 
             return jsonify({
-                "error": "Invalid or expired login."
+                "error":
+                "Invalid or expired login."
             }), 401
 
 
-        return function(*args, **kwargs)
+        return function(
+            *args,
+            **kwargs
+        )
 
 
     return wrapper
@@ -165,19 +203,32 @@ def admin_required(function):
 # ADMIN LOGIN
 # =====================================
 
-@app.route("/api/login", methods=["POST"])
+@app.route(
+    "/api/login",
+    methods=["POST"]
+)
 def login():
 
     data = request.get_json()
 
 
+    if not data:
+
+        return jsonify({
+            "error":
+            "Invalid request."
+        }), 400
+
+
     username = data.get(
-        "username", ""
+        "username",
+        ""
     ).strip()
 
 
     password = data.get(
-        "password", ""
+        "password",
+        ""
     )
 
 
@@ -186,19 +237,29 @@ def login():
         and password == ADMIN_PASSWORD
     ):
 
-        token = secrets.token_urlsafe(32)
+        token = secrets.token_urlsafe(
+            32
+        )
 
         admin_tokens.add(token)
 
 
         return jsonify({
-            "message": "Login successful.",
-            "token": token
+
+            "message":
+            "Login successful.",
+
+            "token":
+            token
+
         }), 200
 
 
     return jsonify({
-        "error": "Invalid username or password."
+
+        "error":
+        "Invalid username or password."
+
     }), 401
 
 
@@ -206,17 +267,23 @@ def login():
 # ADMIN LOGOUT
 # =====================================
 
-@app.route("/api/logout", methods=["POST"])
+@app.route(
+    "/api/logout",
+    methods=["POST"]
+)
 @admin_required
 def logout():
 
     auth_header = request.headers.get(
-        "Authorization", ""
+        "Authorization",
+        ""
     )
 
 
     token = auth_header.replace(
-        "Bearer ", "", 1
+        "Bearer ",
+        "",
+        1
     )
 
 
@@ -224,7 +291,10 @@ def logout():
 
 
     return jsonify({
-        "message": "Logged out successfully."
+
+        "message":
+        "Logged out successfully."
+
     })
 
 
@@ -232,7 +302,10 @@ def logout():
 # GET REVIEWS
 # =====================================
 
-@app.route("/api/reviews", methods=["GET"])
+@app.route(
+    "/api/reviews",
+    methods=["GET"]
+)
 @admin_required
 def get_reviews():
 
@@ -257,8 +330,11 @@ def get_reviews():
 
 
     return jsonify([
+
         dict(review)
+
         for review in reviews
+
     ])
 
 
@@ -266,29 +342,49 @@ def get_reviews():
 # ADD REVIEW
 # =====================================
 
-@app.route("/api/reviews", methods=["POST"])
+@app.route(
+    "/api/reviews",
+    methods=["POST"]
+)
 def add_review():
 
     data = request.get_json()
 
 
+    if not data:
+
+        return jsonify({
+            "error":
+            "Invalid request."
+        }), 400
+
+
     name = data.get(
-        "name", ""
+        "name",
+        ""
     ).strip()
 
 
-    rating = data.get("rating")
+    rating = data.get(
+        "rating"
+    )
 
 
     review = data.get(
-        "review", ""
+        "review",
+        ""
     ).strip()
 
 
-    if not name or not review or not rating:
+    if (
+        not name
+        or not review
+        or not rating
+    ):
 
         return jsonify({
-            "error": "Please fill all fields."
+            "error":
+            "Please fill all fields."
         }), 400
 
 
@@ -296,10 +392,11 @@ def add_review():
 
         rating = int(rating)
 
-    except ValueError:
+    except (ValueError, TypeError):
 
         return jsonify({
-            "error": "Rating must be a number."
+            "error":
+            "Rating must be a number."
         }), 400
 
 
@@ -316,13 +413,20 @@ def add_review():
 
     connection.execute("""
         INSERT INTO reviews
-        (name, rating, review)
+        (
+            name,
+            rating,
+            review
+        )
 
         VALUES (?, ?, ?)
+
     """, (
+
         name,
         rating,
         review
+
     ))
 
 
@@ -332,8 +436,10 @@ def add_review():
 
 
     return jsonify({
+
         "message":
         "Review submitted successfully!"
+
     }), 201
 
 
@@ -341,37 +447,58 @@ def add_review():
 # ADD ENQUIRY
 # =====================================
 
-@app.route("/api/enquiries", methods=["POST"])
+@app.route(
+    "/api/enquiries",
+    methods=["POST"]
+)
 def add_enquiry():
 
     data = request.get_json()
 
 
+    if not data:
+
+        return jsonify({
+            "error":
+            "Invalid request."
+        }), 400
+
+
     name = data.get(
-        "name", ""
+        "name",
+        ""
     ).strip()
 
 
     phone = data.get(
-        "phone", ""
+        "phone",
+        ""
     ).strip()
 
 
     email = data.get(
-        "email", ""
+        "email",
+        ""
     ).strip()
 
 
     message = data.get(
-        "message", ""
+        "message",
+        ""
     ).strip()
 
 
-    if not name or not phone or not message:
+    if (
+        not name
+        or not phone
+        or not message
+    ):
 
         return jsonify({
+
             "error":
             "Please fill in name, phone and message."
+
         }), 400
 
 
@@ -380,14 +507,22 @@ def add_enquiry():
 
     connection.execute("""
         INSERT INTO enquiries
-        (name, phone, email, message)
+        (
+            name,
+            phone,
+            email,
+            message
+        )
 
         VALUES (?, ?, ?, ?)
+
     """, (
+
         name,
         phone,
         email,
         message
+
     ))
 
 
@@ -397,8 +532,10 @@ def add_enquiry():
 
 
     return jsonify({
+
         "message":
         "Your enquiry has been sent successfully!"
+
     }), 201
 
 
@@ -406,7 +543,10 @@ def add_enquiry():
 # GET ENQUIRIES
 # =====================================
 
-@app.route("/api/enquiries", methods=["GET"])
+@app.route(
+    "/api/enquiries",
+    methods=["GET"]
+)
 @admin_required
 def get_enquiries():
 
@@ -425,6 +565,7 @@ def get_enquiries():
         FROM enquiries
 
         ORDER BY id DESC
+
     """).fetchall()
 
 
@@ -432,32 +573,69 @@ def get_enquiries():
 
 
     return jsonify([
+
         dict(enquiry)
+
         for enquiry in enquiries
+
     ])
-    
+
+
 # =====================================
 # ADD ORDER
 # =====================================
 
-@app.route("/api/orders", methods=["POST"])
+@app.route(
+    "/api/orders",
+    methods=["POST"]
+)
 def add_order():
 
     data = request.get_json()
 
-    name = data.get("name", "").strip()
 
-    phone = data.get("phone", "").strip()
+    if not data:
 
-    address = data.get("address", "").strip()
+        return jsonify({
+            "error":
+            "Invalid request."
+        }), 400
 
-    payment_method = data.get(
-        "payment_method", ""
+
+    name = data.get(
+        "name",
+        ""
     ).strip()
 
-    items = data.get("items", [])
 
-    total = data.get("total", 0)
+    phone = data.get(
+        "phone",
+        ""
+    ).strip()
+
+
+    address = data.get(
+        "address",
+        ""
+    ).strip()
+
+
+    payment_method = data.get(
+        "payment_method",
+        ""
+    ).strip()
+
+
+    items = data.get(
+        "items",
+        []
+    )
+
+
+    total = data.get(
+        "total",
+        0
+    )
 
 
     if (
@@ -469,7 +647,10 @@ def add_order():
     ):
 
         return jsonify({
-            "error": "Please fill all order details."
+
+            "error":
+            "Please fill all order details."
+
         }), 400
 
 
@@ -477,23 +658,29 @@ def add_order():
 
         total = float(total)
 
-    except (ValueError, TypeError):
+    except (
+        ValueError,
+        TypeError
+    ):
 
         return jsonify({
-            "error": "Invalid order total."
+
+            "error":
+            "Invalid order total."
+
         }), 400
 
 
-    import json
-
-
-    items_json = json.dumps(items)
+    items_json = json.dumps(
+        items
+    )
 
 
     connection = get_db()
 
 
     cursor = connection.execute("""
+
         INSERT INTO orders
         (
             name,
@@ -508,6 +695,7 @@ def add_order():
         VALUES (?, ?, ?, ?, ?, ?, ?)
 
     """, (
+
         name,
         phone,
         address,
@@ -515,6 +703,7 @@ def add_order():
         items_json,
         total,
         "NEW"
+
     ))
 
 
@@ -527,8 +716,13 @@ def add_order():
 
 
     return jsonify({
-        "message": "Order placed successfully!",
-        "order_id": order_id
+
+        "message":
+        "Order placed successfully!",
+
+        "order_id":
+        order_id
+
     }), 201
 
 
@@ -536,17 +730,18 @@ def add_order():
 # GET ORDERS
 # =====================================
 
-@app.route("/api/orders", methods=["GET"])
+@app.route(
+    "/api/orders",
+    methods=["GET"]
+)
 @admin_required
 def get_orders():
-
-    import json
-
 
     connection = get_db()
 
 
     orders = connection.execute("""
+
         SELECT
             id,
             name,
@@ -582,15 +777,21 @@ def get_orders():
                 order_data["items"]
             )
 
-        except:
+        except (
+            json.JSONDecodeError,
+            TypeError
+        ):
 
             order_data["items"] = []
 
 
-        result.append(order_data)
+        result.append(
+            order_data
+        )
 
 
     return jsonify(result)
+
 
 # =====================================
 # CUSTOMER ORDER TRACKING
@@ -604,7 +805,9 @@ def track_order(order_id):
 
     connection = get_db()
 
+
     order = connection.execute("""
+
         SELECT
             id,
             name,
@@ -617,7 +820,10 @@ def track_order(order_id):
 
         WHERE id = ?
 
-    """, (order_id,)).fetchone()
+    """, (
+        order_id,
+    )).fetchone()
+
 
     connection.close()
 
@@ -625,11 +831,12 @@ def track_order(order_id):
     if order is None:
 
         return jsonify({
-            "error": "Order not found."
+
+            "error":
+            "Order not found."
+
         }), 404
 
-
-    import json
 
     order_data = dict(order)
 
@@ -640,15 +847,20 @@ def track_order(order_id):
             order_data["items"]
         )
 
-    except:
+    except (
+        json.JSONDecodeError,
+        TypeError
+    ):
 
         order_data["items"] = []
 
 
-    # Don't expose the customer's
+    # Don't expose customer's
     # phone/address publicly.
 
-    return jsonify(order_data)
+    return jsonify(
+        order_data
+    )
 
 
 # =====================================
@@ -665,25 +877,44 @@ def update_order_status(order_id):
     data = request.get_json()
 
 
+    if not data:
+
+        return jsonify({
+            "error":
+            "Invalid request."
+        }), 400
+
+
     status = data.get(
-        "status", ""
+        "status",
+        ""
     ).strip().upper()
 
 
     allowed_statuses = [
+
         "NEW",
+
         "ACCEPTED",
+
         "PREPARING",
+
         "READY",
+
         "DELIVERED",
+
         "CANCELLED"
+
     ]
 
 
     if status not in allowed_statuses:
 
         return jsonify({
-            "error": "Invalid order status."
+
+            "error":
+            "Invalid order status."
+
         }), 400
 
 
@@ -691,6 +922,7 @@ def update_order_status(order_id):
 
 
     cursor = connection.execute("""
+
         UPDATE orders
 
         SET status = ?
@@ -698,8 +930,10 @@ def update_order_status(order_id):
         WHERE id = ?
 
     """, (
+
         status,
         order_id
+
     ))
 
 
@@ -711,15 +945,21 @@ def update_order_status(order_id):
     if cursor.rowcount == 0:
 
         return jsonify({
-            "error": "Order not found."
+
+            "error":
+            "Order not found."
+
         }), 404
 
 
     return jsonify({
+
         "message":
         "Order status updated successfully."
+
     })
-    
+
+
 # =====================================
 # WEBSITE HOME
 # =====================================
@@ -727,18 +967,34 @@ def update_order_status(order_id):
 @app.route("/")
 def home():
 
-    return app.send_static_file("index.html")
+    return app.send_static_file(
+        "index.html"
+    )
+
+
+# =====================================
+# ADMIN DASHBOARD
+# =====================================
 
 @app.route("/admin.html")
 def admin_page():
 
-    return app.send_static_file("admin.html")
+    return app.send_static_file(
+        "admin.html"
+    )
 
+
+# =====================================
+# ADMIN LOGIN PAGE
+# =====================================
 
 @app.route("/admin-login.html")
 def admin_login_page():
 
-    return app.send_static_file("admin-login.html")
+    return app.send_static_file(
+        "admin-login.html"
+    )
+
 
 # =====================================
 # START SERVER
@@ -746,11 +1002,7 @@ def admin_login_page():
 
 if __name__ == "__main__":
 
-    create_database()
-
-
     app.run(
         debug=True,
         port=5000
     )
-    
