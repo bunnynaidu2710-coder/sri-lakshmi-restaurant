@@ -306,7 +306,7 @@ def logout():
     "/api/reviews",
     methods=["GET"]
 )
-@admin_required
+
 def get_reviews():
 
     connection = get_db()
