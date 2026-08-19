@@ -217,17 +217,11 @@
 // API
 // =====================================
 
-// IMPORTANT:
-// Empty string means use the same
-// server that is serving this page.
-//
-// Local:
-// http://127.0.0.1:5000/api/login
-//
-// Live:
-// https://sri-lakshmi-restaurant.onrender.com/api/login
+// GitHub Pages = frontend
+// Render = backend
 
-const API = "";
+const API =
+    "https://sri-lakshmi-restaurant.onrender.com";
 
 
 // =====================================
@@ -366,13 +360,15 @@ loginForm.addEventListener(
                 "success";
 
 
-            // Redirect to admin dashboard
+            // =================================
+            // REDIRECT TO ADMIN DASHBOARD
+            // =================================
 
             setTimeout(
                 function() {
 
                     window.location.href =
-                        "/admin.html";
+                        "./admin.html";
 
                 },
                 500
