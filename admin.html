@@ -2,10 +2,13 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Sri Lakshmi - Admin Dashboard</title>
 
@@ -17,87 +20,193 @@
 
         body {
             margin: 0;
+
             font-family: Arial, sans-serif;
+
             background: #f5f5f5;
+
             color: #222;
         }
 
+        /* =========================
+           HEADER
+        ========================= */
+
         header {
             background: #111;
+
             color: white;
-            padding: 20px;
+
+            padding: 25px 20px;
+
             text-align: center;
         }
 
-        header button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
+        header h1 {
+            margin: 0 0 10px;
+
+            font-size: 42px;
         }
+
+        header p {
+            margin: 10px 0 20px;
+
+            font-size: 18px;
+        }
+
+        header button {
+            padding: 11px 25px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            background: white;
+
+            color: #111;
+        }
+
+        header button:hover {
+            opacity: 0.85;
+        }
+
+        /* =========================
+           DASHBOARD
+        ========================= */
 
         .dashboard {
             max-width: 1200px;
+
             margin: 30px auto;
+
             padding: 20px;
         }
 
-        .dashboard h2 {
-            margin-top: 40px;
-        }
+        /* =========================
+           SUMMARY CARDS
+        ========================= */
 
         .cards {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
             gap: 20px;
-            margin-bottom: 30px;
+
+            margin-bottom: 35px;
         }
 
         .summary-card {
             background: white;
-            padding: 25px;
-            border-radius: 10px;
+
+            padding: 30px;
+
+            border-radius: 12px;
+
             text-align: center;
+
             box-shadow:
-                0 3px 10px rgba(0, 0, 0, 0.08);
+                0 4px 15px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        .summary-card p {
+            color: #777;
+
+            font-size: 17px;
         }
 
         .summary-card h3 {
-            font-size: 30px;
-            margin: 10px 0;
+            font-size: 32px;
+
+            margin: 10px 0 0;
+
+            color: #111;
         }
+
+        /* =========================
+           SECTION HEADINGS
+        ========================= */
+
+        .dashboard h2 {
+            margin-top: 45px;
+
+            margin-bottom: 18px;
+
+            font-size: 28px;
+        }
+
+        /* =========================
+           COMMON CARDS
+        ========================= */
 
         .review-card,
         .enquiry-card,
         .order-card {
             background: white;
-            padding: 20px;
+
+            padding: 22px;
+
             margin-bottom: 15px;
-            border-radius: 10px;
+
+            border-radius: 12px;
+
             box-shadow:
-                0 3px 10px rgba(0, 0, 0, 0.08);
+                0 4px 15px
+                rgba(0, 0, 0, 0.08);
         }
 
-        .stars {
-            font-size: 20px;
-            margin-top: 5px;
+        /* =========================
+           REVIEWS
+        ========================= */
+
+        .review-card {
+            border-left: 5px solid #ff9800;
         }
 
         .customer-name {
             font-weight: bold;
-            font-size: 18px;
+
+            font-size: 19px;
+
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            font-size: 22px;
+
+            margin-bottom: 12px;
+        }
+
+        .message {
+            line-height: 1.6;
+
+            margin-top: 10px;
         }
 
         .date {
             color: #777;
+
             font-size: 13px;
-            margin-top: 10px;
+
+            margin-top: 12px;
         }
 
-        .message {
-            margin-top: 12px;
-            line-height: 1.5;
+        /* =========================
+           ENQUIRIES
+        ========================= */
+
+        .enquiry-card {
+            border-left: 5px solid #2196f3;
+        }
+
+        .enquiry-card p {
+            margin: 10px 0;
         }
 
         /* =========================
@@ -110,6 +219,7 @@
 
         .order-card h3 {
             margin-top: 0;
+
             font-size: 22px;
         }
 
@@ -119,16 +229,23 @@
 
         .order-items {
             margin: 15px 0;
+
             padding: 15px;
+
             background: #f8f8f8;
+
             border-radius: 8px;
         }
 
         .order-item {
             display: flex;
+
             justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #ddd;
+
+            padding: 9px 0;
+
+            border-bottom:
+                1px solid #ddd;
         }
 
         .order-item:last-child {
@@ -137,33 +254,53 @@
 
         .order-total {
             font-size: 20px;
+
             font-weight: bold;
+
             margin-top: 15px;
         }
 
         .order-status {
             display: inline-block;
+
             padding: 6px 12px;
+
             margin-left: 5px;
+
             border-radius: 6px;
+
             background: #fff3cd;
+
             font-weight: bold;
         }
 
+        /* =========================
+           ORDER BUTTONS
+        ========================= */
+
         .order-buttons {
             display: flex;
+
             gap: 10px;
+
             flex-wrap: wrap;
+
             margin-top: 20px;
         }
 
         .order-buttons button {
             padding: 9px 15px;
+
             border: none;
+
             border-radius: 6px;
+
             cursor: pointer;
+
             background: #ff9800;
+
             color: white;
+
             font-weight: bold;
         }
 
@@ -175,35 +312,87 @@
             background: #d32f2f;
         }
 
+        /* =========================
+           REFRESH BUTTON
+        ========================= */
+
         .refresh-button {
-            padding: 10px 18px;
+            padding: 11px 20px;
+
             border: none;
+
             border-radius: 6px;
+
             cursor: pointer;
+
             background: #111;
+
             color: white;
+
             margin-bottom: 20px;
+
+            font-weight: bold;
         }
+
+        .refresh-button:hover {
+            opacity: 0.85;
+        }
+
+        /* =========================
+           ERROR
+        ========================= */
 
         .error-box {
-            background: white;
-            border-left: 5px solid #ff9800;
+            background: #fff;
+
+            border-left: 5px solid red;
+
             padding: 20px;
+
             margin-bottom: 15px;
-            border-radius: 10px;
+
+            border-radius: 8px;
+
+            color: #b00020;
         }
 
+        .loading {
+            color: #777;
+
+            padding: 15px 0;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
         @media (max-width: 768px) {
+
+            header h1 {
+                font-size: 30px;
+            }
 
             .cards {
                 grid-template-columns: 1fr;
             }
 
+            .dashboard {
+                padding: 15px;
+            }
+
             .order-item {
                 flex-direction: column;
+
                 gap: 5px;
             }
 
+            .order-buttons {
+                flex-direction: column;
+            }
+
+            .order-buttons button {
+                width: 100%;
+            }
         }
 
     </style>
@@ -214,15 +403,15 @@
 <body>
 
 
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
 
-    <h1>Sri Lakshmi Restaurant</h1>
+    <h1>
+        Sri Lakshmi Restaurant
+    </h1>
 
-    <p>Admin Dashboard</p>
+    <p>
+        Admin Dashboard
+    </p>
 
     <button onclick="logout()">
         Logout
@@ -240,9 +429,12 @@
 
     <div class="cards">
 
+
         <div class="summary-card">
 
-            <p>Total Reviews</p>
+            <p>
+                Total Reviews
+            </p>
 
             <h3 id="review-count">
                 0
@@ -253,7 +445,9 @@
 
         <div class="summary-card">
 
-            <p>Total Enquiries</p>
+            <p>
+                Total Enquiries
+            </p>
 
             <h3 id="enquiry-count">
                 0
@@ -264,13 +458,16 @@
 
         <div class="summary-card">
 
-            <p>Total Orders</p>
+            <p>
+                Total Orders
+            </p>
 
             <h3 id="order-count">
                 0
             </h3>
 
         </div>
+
 
     </div>
 
@@ -285,7 +482,7 @@
 
     <div id="admin-reviews">
 
-        <p>
+        <p class="loading">
             Loading reviews...
         </p>
 
@@ -302,7 +499,7 @@
 
     <div id="admin-enquiries">
 
-        <p>
+        <p class="loading">
             Loading enquiries...
         </p>
 
@@ -317,18 +514,18 @@
         📦 Customer Orders
     </h2>
 
+
     <button
         class="refresh-button"
-        onclick="loadOrders()">
-
+        onclick="loadOrders()"
+    >
         🔄 Refresh Orders
-
     </button>
 
 
     <div id="orders-container">
 
-        <p>
+        <p class="loading">
             Loading orders...
         </p>
 
@@ -338,35 +535,20 @@
 </div>
 
 
-
 <script>
 
 
 // =====================================
-// API
+// BACKEND URL
 // =====================================
 
 // IMPORTANT:
-//
-// DO NOT use:
-// http://127.0.0.1:5000
-//
-// Empty string means the live website
-// uses the same Render server.
-//
-// Example:
-//
-// /api/reviews
-// /api/enquiries
-// /api/orders
+// GitHub Pages = frontend
+// Render = backend
 
 const API =
     "https://sri-lakshmi-restaurant-backend.onrender.com";
 
-
-// =====================================
-// ADMIN TOKEN
-// =====================================
 
 const TOKEN =
     localStorage.getItem(
@@ -381,7 +563,58 @@ const TOKEN =
 if (!TOKEN) {
 
     window.location.href =
-    "./admin-login.html";
+        "admin-login.html";
+
+}
+
+
+// =====================================
+// COMMON FETCH FUNCTION
+// =====================================
+
+async function apiFetch(
+    endpoint,
+    options = {}
+) {
+
+    const headers = {
+
+        ...(options.headers || {}),
+
+        "Authorization":
+            "Bearer " + TOKEN
+
+    };
+
+
+    const response =
+        await fetch(
+            API + endpoint,
+            {
+                ...options,
+                headers: headers
+            }
+        );
+
+
+    if (response.status === 401) {
+
+        localStorage.removeItem(
+            "admin_token"
+        );
+
+        window.location.href =
+            "admin-login.html";
+
+        throw new Error(
+            "Unauthorized"
+        );
+
+    }
+
+
+    return response;
+
 }
 
 
@@ -392,113 +625,139 @@ if (!TOKEN) {
 async function loadReviews() {
 
     const container =
-        document.getElementById("admin-reviews");
+        document.getElementById(
+            "admin-reviews"
+        );
+
 
     try {
 
-        const response = await fetch(
-            API + "/api/reviews",
-            {
-                method: "GET",
+        const response =
+            await apiFetch(
+                "/api/reviews"
+            );
 
-                headers: {
-                    "Authorization":
-                        "Bearer " + TOKEN
-                }
-            }
-        );
 
-        console.log(
-            "Reviews status:",
-            response.status
-        );
+        const reviews =
+            await response.json();
 
-        const text =
-            await response.text();
-
-        console.log(
-            "Reviews response:",
-            text
-        );
 
         if (!response.ok) {
 
             throw new Error(
-                "Server returned " +
-                response.status +
-                ": " +
-                text
+                reviews.error ||
+                "Unable to load reviews."
             );
+
         }
 
-        const reviews =
-            JSON.parse(text);
-
-        console.log(
-            "Reviews data:",
-            reviews
-        );
 
         document.getElementById(
             "review-count"
         ).textContent =
             reviews.length;
 
+
         container.innerHTML = "";
 
-        if (reviews.length === 0) {
+
+        if (
+            !Array.isArray(reviews) ||
+            reviews.length === 0
+        ) {
 
             container.innerHTML =
                 "<p>No reviews yet.</p>";
 
             return;
+
         }
 
-        reviews.forEach(function(review) {
 
-            const card =
-                document.createElement("div");
+        reviews.forEach(
+            function(review) {
 
-            card.className =
-                "review-card";
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
-            const rating =
-                Number(review.rating);
 
-            const stars =
-                "★".repeat(rating) +
-                "☆".repeat(5 - rating);
+                card.className =
+                    "review-card";
 
-            card.innerHTML = `
 
-                <div class="customer-name">
-                    ${review.name}
-                </div>
+                const rating =
+                    Number(
+                        review.rating
+                    ) || 0;
 
-                <div class="stars">
-                    ${stars}
-                </div>
 
-                <div class="message">
-                    "${review.review}"
-                </div>
+                const stars =
+                    "★".repeat(
+                        rating
+                    ) +
+                    "☆".repeat(
+                        5 - rating
+                    );
 
-                <div class="date">
-                    ${review.created_at}
-                </div>
 
-            `;
+                card.innerHTML = `
 
-            container.appendChild(card);
+                    <div
+                        class="customer-name"
+                    >
+                        ${escapeHTML(
+                            review.name
+                        )}
+                    </div>
 
-        });
+                    <div class="stars">
+                        ${stars}
+                    </div>
 
-    } catch (error) {
+                    <div class="message">
+                        "${escapeHTML(
+                            review.review
+                        )}"
+                    </div>
+
+                    <div class="date">
+                        ${escapeHTML(
+                            review.created_at ||
+                            ""
+                        )}
+                    </div>
+
+                `;
+
+
+                container.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+    catch (error) {
 
         console.error(
-            "REVIEWS ERROR:",
+            "Reviews error:",
             error
         );
+
+
+        if (
+            error.message ===
+            "Unauthorized"
+        ) {
+
+            return;
+
+        }
+
 
         container.innerHTML = `
 
@@ -508,16 +767,17 @@ async function loadReviews() {
 
                 <br><br>
 
-                Error:
-                ${error.message}
+                ${escapeHTML(
+                    error.message
+                )}
 
             </div>
 
         `;
 
     }
-}
 
+}
 
 
 // =====================================
@@ -535,37 +795,23 @@ async function loadEnquiries() {
     try {
 
         const response =
-            await fetch(
-                API + "/api/enquiries",
-                {
-                    headers: {
-                        "Authorization":
-                            "Bearer " + TOKEN
-                    }
-                }
+            await apiFetch(
+                "/api/enquiries"
             );
 
 
-        if (response.status === 401) {
-
-            logout();
-
-            return;
-
-        }
+        const enquiries =
+            await response.json();
 
 
         if (!response.ok) {
 
             throw new Error(
-                "Unable to load enquiries"
+                enquiries.error ||
+                "Unable to load enquiries."
             );
 
         }
-
-
-        const enquiries =
-            await response.json();
 
 
         document.getElementById(
@@ -577,7 +823,10 @@ async function loadEnquiries() {
         container.innerHTML = "";
 
 
-        if (enquiries.length === 0) {
+        if (
+            !Array.isArray(enquiries) ||
+            enquiries.length === 0
+        ) {
 
             container.innerHTML =
                 "<p>No enquiries yet.</p>";
@@ -588,7 +837,7 @@ async function loadEnquiries() {
 
 
         enquiries.forEach(
-            enquiry => {
+            function(enquiry) {
 
                 const card =
                     document.createElement(
@@ -602,7 +851,9 @@ async function loadEnquiries() {
 
                 card.innerHTML = `
 
-                    <div class="customer-name">
+                    <div
+                        class="customer-name"
+                    >
                         ${escapeHTML(
                             enquiry.name
                         )}
@@ -624,15 +875,20 @@ async function loadEnquiries() {
                     </p>
 
                     <div class="message">
+
                         ${escapeHTML(
                             enquiry.message
                         )}
+
                     </div>
 
                     <div class="date">
+
                         ${escapeHTML(
-                            enquiry.created_at
+                            enquiry.created_at ||
+                            ""
                         )}
+
                     </div>
 
                 `;
@@ -647,7 +903,6 @@ async function loadEnquiries() {
 
     }
 
-
     catch (error) {
 
         console.error(
@@ -656,13 +911,27 @@ async function loadEnquiries() {
         );
 
 
+        if (
+            error.message ===
+            "Unauthorized"
+        ) {
+
+            return;
+
+        }
+
+
         container.innerHTML = `
 
             <div class="error-box">
 
-                <p>
-                    ❌ Unable to load enquiries.
-                </p>
+                ❌ Unable to load enquiries.
+
+                <br><br>
+
+                ${escapeHTML(
+                    error.message
+                )}
 
             </div>
 
@@ -671,7 +940,6 @@ async function loadEnquiries() {
     }
 
 }
-
 
 
 // =====================================
@@ -687,43 +955,29 @@ async function loadOrders() {
 
 
     container.innerHTML =
-        "<p>Loading orders...</p>";
+        "<p class='loading'>Loading orders...</p>";
 
 
     try {
 
         const response =
-            await fetch(
-                API + "/api/orders",
-                {
-                    headers: {
-                        "Authorization":
-                            "Bearer " + TOKEN
-                    }
-                }
+            await apiFetch(
+                "/api/orders"
             );
 
 
-        if (response.status === 401) {
-
-            logout();
-
-            return;
-
-        }
+        const orders =
+            await response.json();
 
 
         if (!response.ok) {
 
             throw new Error(
-                "Unable to load orders"
+                orders.error ||
+                "Unable to load orders."
             );
 
         }
-
-
-        const orders =
-            await response.json();
 
 
         document.getElementById(
@@ -735,7 +989,10 @@ async function loadOrders() {
         container.innerHTML = "";
 
 
-        if (orders.length === 0) {
+        if (
+            !Array.isArray(orders) ||
+            orders.length === 0
+        ) {
 
             container.innerHTML = `
 
@@ -755,7 +1012,7 @@ async function loadOrders() {
 
 
         orders.forEach(
-            order => {
+            function(order) {
 
                 const card =
                     document.createElement(
@@ -766,10 +1023,6 @@ async function loadOrders() {
                 card.className =
                     "order-card";
 
-
-                // =========================
-                // ORDER ITEMS
-                // =========================
 
                 let itemsHTML = "";
 
@@ -783,7 +1036,7 @@ async function loadOrders() {
 
 
                 items.forEach(
-                    item => {
+                    function(item) {
 
                         const price =
                             Number(
@@ -805,12 +1058,14 @@ async function loadOrders() {
                         itemsHTML += `
 
                             <div
-                                class="order-item">
+                                class="order-item"
+                            >
 
                                 <span>
 
                                     ${escapeHTML(
-                                        item.name
+                                        item.name ||
+                                        "Item"
                                     )}
 
                                     ×
@@ -818,6 +1073,7 @@ async function loadOrders() {
                                     ${quantity}
 
                                 </span>
+
 
                                 <strong>
 
@@ -833,20 +1089,20 @@ async function loadOrders() {
                 );
 
 
-                // =========================
-                // ORDER CARD
-                // =========================
-
                 card.innerHTML = `
 
                     <h3>
 
-                        📦 Order #${order.id}
+                        📦 Order #${escapeHTML(
+                            String(order.id)
+                        )}
 
                     </h3>
 
 
-                    <div class="order-info">
+                    <div
+                        class="order-info"
+                    >
 
                         <p>
 
@@ -907,12 +1163,11 @@ async function loadOrders() {
                             </strong>
 
                             <span
-                                class="order-status">
-
+                                class="order-status"
+                            >
                                 ${escapeHTML(
                                     order.status
                                 )}
-
                             </span>
 
                         </p>
@@ -925,7 +1180,9 @@ async function loadOrders() {
                     </h4>
 
 
-                    <div class="order-items">
+                    <div
+                        class="order-items"
+                    >
 
                         ${
                             itemsHTML ||
@@ -936,12 +1193,15 @@ async function loadOrders() {
 
 
                     <div
-                        class="order-total">
+                        class="order-total"
+                    >
 
                         Total:
-                        ₹${Number(
-                            order.total
-                        ) || 0}
+                        ₹${escapeHTML(
+                            String(
+                                order.total
+                            )
+                        )}
 
                     </div>
 
@@ -950,15 +1210,16 @@ async function loadOrders() {
 
                         Ordered:
                         ${escapeHTML(
-                            order.created_at
+                            order.created_at ||
+                            ""
                         )}
 
                     </div>
 
 
                     <div
-                        class="order-buttons">
-
+                        class="order-buttons"
+                    >
 
                         <button
                             onclick="
@@ -966,10 +1227,9 @@ async function loadOrders() {
                                     ${order.id},
                                     'ACCEPTED'
                                 )
-                            ">
-
+                            "
+                        >
                             Accept
-
                         </button>
 
 
@@ -979,10 +1239,9 @@ async function loadOrders() {
                                     ${order.id},
                                     'PREPARING'
                                 )
-                            ">
-
+                            "
+                        >
                             Preparing
-
                         </button>
 
 
@@ -992,10 +1251,9 @@ async function loadOrders() {
                                     ${order.id},
                                     'READY'
                                 )
-                            ">
-
+                            "
+                        >
                             Ready
-
                         </button>
 
 
@@ -1005,10 +1263,9 @@ async function loadOrders() {
                                     ${order.id},
                                     'DELIVERED'
                                 )
-                            ">
-
+                            "
+                        >
                             Delivered
-
                         </button>
 
 
@@ -1019,12 +1276,10 @@ async function loadOrders() {
                                     ${order.id},
                                     'CANCELLED'
                                 )
-                            ">
-
+                            "
+                        >
                             Cancel
-
                         </button>
-
 
                     </div>
 
@@ -1040,7 +1295,6 @@ async function loadOrders() {
 
     }
 
-
     catch (error) {
 
         console.error(
@@ -1049,18 +1303,27 @@ async function loadOrders() {
         );
 
 
+        if (
+            error.message ===
+            "Unauthorized"
+        ) {
+
+            return;
+
+        }
+
+
         container.innerHTML = `
 
-            <div class="order-card">
+            <div class="error-box">
 
-                <p>
-                    ❌ Unable to load orders.
-                </p>
+                ❌ Unable to load orders.
 
-                <p>
-                    The live Flask backend could
-                    not be reached.
-                </p>
+                <br><br>
+
+                ${escapeHTML(
+                    error.message
+                )}
 
             </div>
 
@@ -1069,7 +1332,6 @@ async function loadOrders() {
     }
 
 }
-
 
 
 // =====================================
@@ -1081,12 +1343,10 @@ async function updateOrderStatus(
     status
 ) {
 
-
     try {
 
         const response =
-            await fetch(
-                API +
+            await apiFetch(
                 "/api/orders/" +
                 orderId,
                 {
@@ -1094,35 +1354,18 @@ async function updateOrderStatus(
                     method: "PUT",
 
                     headers: {
-
                         "Content-Type":
-                            "application/json",
-
-                        "Authorization":
-                            "Bearer " +
-                            TOKEN
-
+                            "application/json"
                     },
 
                     body:
                         JSON.stringify({
-
                             status:
                                 status
-
                         })
 
                 }
             );
-
-
-        if (response.status === 401) {
-
-            logout();
-
-            return;
-
-        }
 
 
         const result =
@@ -1153,23 +1396,27 @@ async function updateOrderStatus(
 
     }
 
-
     catch (error) {
 
         console.error(
-            "Status update error:",
             error
         );
 
 
-        alert(
-            "Could not connect to server."
-        );
+        if (
+            error.message !==
+            "Unauthorized"
+        ) {
+
+            alert(
+                "Could not connect to server."
+            );
+
+        }
 
     }
 
 }
-
 
 
 // =====================================
@@ -1181,17 +1428,16 @@ async function logout() {
     try {
 
         await fetch(
-            API + "/api/logout",
+            API +
+            "/api/logout",
             {
 
                 method: "POST",
 
                 headers: {
-
                     "Authorization":
                         "Bearer " +
                         TOKEN
-
                 }
 
             }
@@ -1199,11 +1445,9 @@ async function logout() {
 
     }
 
-
     catch (error) {
 
         console.error(
-            "Logout error:",
             error
         );
 
@@ -1216,27 +1460,18 @@ async function logout() {
 
 
     window.location.href =
-        "/admin-login.html";
+        "admin-login.html";
 
 }
 
 
-
 // =====================================
-// SECURITY HELPER
+// HTML ESCAPE
 // =====================================
 
 function escapeHTML(value) {
 
-    if (
-        value === null ||
-        value === undefined
-    ) {
-        return "";
-    }
-
-
-    return String(value)
+    return String(value ?? "")
         .replace(
             /&/g,
             "&amp;"
@@ -1259,7 +1494,6 @@ function escapeHTML(value) {
         );
 
 }
-
 
 
 // =====================================
